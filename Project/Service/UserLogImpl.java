@@ -14,4 +14,10 @@ public class UserLogImpl implements Userlog {
 
 	}
 
+	@Override
+	public void logOut() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

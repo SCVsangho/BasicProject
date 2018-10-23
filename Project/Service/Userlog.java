@@ -9,4 +9,7 @@ public interface Userlog {
 	
 	//로그인 [[created class 'LogInimpl']]
 	public void login();
+	
+	//로그인 [[created class 'LogOutImpl']]
+	public void logOut();
 }
