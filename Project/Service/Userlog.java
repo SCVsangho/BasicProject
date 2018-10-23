@@ -10,7 +10,11 @@ public interface Userlog {
 	//로그인 [[created class 'LogInimpl']]
 	public void login();
 	
-	//로그인 [[created class 'LogOutImpl']]
+	//로그아웃 [[created class 'LogOutImpl']]
 	public void logOut();
+	
+	//회원리스트 출력 [[created class 'UserListImpl']]
+	public void userList();
+	
 	
 }

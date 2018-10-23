@@ -20,4 +20,10 @@ public class UserLogImpl implements Userlog {
 		
 	}
 
+	@Override
+	public void userList() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
