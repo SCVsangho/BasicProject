@@ -14,5 +14,11 @@ public class NoticeImpl implements Notice {
 		
 	}
 
+	@Override
+	public void viewNotice() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

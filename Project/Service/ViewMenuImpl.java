@@ -25,6 +25,7 @@ public class ViewMenuImpl implements ViewMenu {
 		MenuData menuCheck = menuDao.checkedMenu("name", menu.getMenuName());
 		if (menuCheck == null) {
 			/* 메뉴 삽입 */
+		
 			menuDao.insertMenu(menu);
 		} else {
 			/* 메뉴 중복 */

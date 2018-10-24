@@ -14,4 +14,10 @@ public class cartinImpl implements cartin {
 
 	}
 
+	@Override
+	public void cartPrint() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

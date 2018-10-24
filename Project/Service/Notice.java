@@ -6,5 +6,7 @@ public interface Notice {
 	public void addNotice();
 	
 	public void removeNotice();
+	
+	public void viewNotice();
 
 }
