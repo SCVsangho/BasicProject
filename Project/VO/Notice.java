@@ -2,11 +2,21 @@ package project.vo;
 
 public class Notice {
 
+	int number;
 	String title;
-	String notice;
+	String description;
+	String author;
 
-	
 	/*====================================================================================*/
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -15,12 +25,20 @@ public class Notice {
 		this.title = title;
 	}
 
-	public String getNotice() {
-		return notice;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setNotice(String notice) {
-		this.notice = notice;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 }
