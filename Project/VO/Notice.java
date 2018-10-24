@@ -6,6 +6,7 @@ public class Notice {
 	String title;
 	String description;
 	String author;
+	String time;
 
 	/*====================================================================================*/
 
@@ -39,6 +40,14 @@ public class Notice {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	public String getTime(String time) {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 }
