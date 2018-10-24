@@ -1,6 +1,5 @@
 package project.vo;
 
-import java.util.HashSet;
 
 public class MenuData {
 
@@ -8,7 +7,7 @@ public class MenuData {
 	int menuPrice;
 
 	
-	/*======================================*/
+	/*====================================================================================*/
 	public String getMenuName() {
 		return menuName;
 	}
