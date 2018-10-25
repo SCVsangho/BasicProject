@@ -8,7 +8,7 @@ import project.vo.UserData;
 public class FindAcountImpl implements FindAcount {
 
 	@Override
-	public void findAcount(String input) {
+	public void findAcount() {
 		String name;
 		String id;
 		String tel;
