@@ -134,7 +134,6 @@ public class UserLogImpl implements Userlog {
 			}
 		}
 		
-		
 		System.out.println("회원가입이 완료되었습니다.");
 	
 		System.out.println("[-------회원가입 -------]");
@@ -151,8 +150,31 @@ public class UserLogImpl implements Userlog {
 	@Override
 	public void login() {
 
-		System.out.println("[------- 로그인  -------]");
-
+		String id;
+		String password;
+		
+	
+			System.out.print("ID : ");
+			id = s1.nextLine();
+			
+			System.out.print("Password : ");
+			password = s1.nextLine();
+			
+			for(int i=0; i<Database.tb_user.size(); i++){
+				UserData user1 = Database.tb_user.get(i);
+				
+				if(user1.getId().equals(id)){
+					
+					if(user1.getPassWord().equals(password)){
+						System.out.println("로그인 되었습니다.");
+						
+					} else {
+						System.out.println("입력하신 비밀번호는 올바르지 않습니다. 다시 입력해주세요. ");
+					}
+				} else {	
+					System.out.println("입력하신 ID는 올바르지 않습니다. 다시 입력해주세요.");
+				}
+			}
 	}
 
 	@Override
@@ -213,21 +235,9 @@ public class UserLogImpl implements Userlog {
 		}
 	}
 
-	@Override
-	// 회원목록 삭제
+	@Override  //회원목록 삭제
 	public void userListRemove() {
 		System.out.println("[-------회원목록 삭제-------]");
-		Scanner s = new Scanner(System.in);
-
-		userList();
-		System.out.print("삭제할 번호 입력>");
-
-		int delUser = s.nextInt();
-		if (delUser <= Database.tb_user.size()) {
-			Database.tb_user.remove(delUser - 1);
-		} else {
-			System.out.println("존재하지 않는 회원입니다.");
-		}
+		
 	}
-
-}
+	}
