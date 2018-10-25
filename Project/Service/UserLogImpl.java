@@ -213,9 +213,21 @@ public class UserLogImpl implements Userlog {
 		}
 	}
 
-	@Override  //회원목록 삭제
+	@Override
+	// 회원목록 삭제
 	public void userListRemove() {
 		System.out.println("[-------회원목록 삭제-------]");
-		
+		Scanner s = new Scanner(System.in);
+
+		userList();
+		System.out.print("삭제할 번호 입력>");
+
+		int delUser = s.nextInt();
+		if (delUser <= Database.tb_user.size()) {
+			Database.tb_user.remove(delUser - 1);
+		} else {
+			System.out.println("존재하지 않는 회원입니다.");
+		}
 	}
-	}
+
+}
