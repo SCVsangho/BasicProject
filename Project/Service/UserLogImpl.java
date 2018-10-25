@@ -151,49 +151,7 @@ public class UserLogImpl implements Userlog {
 	@Override
 	public void login() {
 
-		UserData user = new UserData();
-		Notice notice = new NoticeImpl();
-		Userlog user1og = new UserLogImpl();
-		ViewMenu viewmenu = new ViewMenuImpl();
-		cartin cartin = new cartinImpl();
-		
-
 		System.out.println("[------- 로그인  -------]");
-
-		boolean menu = true;
-
-		if (!user.setId == equals("admin")) {
-			user1og.management();
-		}
-
-		while (menu) {
-			System.out.println("1. 로그아웃");
-			System.out.println("2. 공지사항");
-			System.out.println("3. 메뉴보기");
-			System.out.println("4. 장바구니");
-			System.out.println("원하시는 메뉴 입력하세요.>");
-
-			int click = s.nextInt();
-
-			switch (click) {
-			case 1:
-				// 로그아웃
-				user1og.logOut();
-				break;
-			case 2:
-				// 공지사항
-				notice.viewNotice();
-				break;
-			case 3:
-				// 메뉴보기
-				viewmenu.viewMenu();
-				break;
-			case 4:
-				// 장바구니
-				cartin.insertCart();
-				break;
-			}
-		}
 
 	}
 
@@ -208,11 +166,10 @@ public class UserLogImpl implements Userlog {
 		System.out.println("[-------회원목록 -------]");
 
 	}
-
 	@Override
 	public void management() {
+
 		System.out.println("[------관리자모드-------]");
-		
 
 		boolean isContinue = true;
 
@@ -229,8 +186,7 @@ public class UserLogImpl implements Userlog {
 
 			Userlog userlog = new UserLogImpl();
 			ViewMenu viewmenu = new ViewMenuImpl();
-			
-				
+
 			switch (menu) {
 			case 1:
 				// 회원목록
@@ -239,13 +195,13 @@ public class UserLogImpl implements Userlog {
 			case 2:
 				// 회원삭제
 				userlog.userListRemove();
-				break;		
+				break;
 			case 3:
-				//메뉴추가
+				// 메뉴추가
 				viewmenu.addMenu();
 				break;
 			case 4:
-				//메뉴삭제
+				// 메뉴삭제
 				viewmenu.removeMenu();
 				break;
 			default:
@@ -253,8 +209,8 @@ public class UserLogImpl implements Userlog {
 				isContinue = false;
 				break;
 
+			}
 		}
-	}
 	}
 
 	@Override  //회원목록 삭제
