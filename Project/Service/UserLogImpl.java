@@ -8,43 +8,53 @@ import project.dao.UserCheckImpl;
 import project.vo.UserData;
 
 public class UserLogImpl implements Userlog {
-
-	UserCheck userCheck = new UserCheckImpl();
+	Scanner s = new Scanner(System.in);
 
 	@Override
 	public void newJoin() {
 		System.out.println("[-------회원가입 -------]");
+
+		// 회원가입
+		UserData user = new UserData();
+		System.out.println("아이디 : ");
+		user.setId(s.nextLine());
+		System.out.println("비밀번호 : ");
+		user.setPassWord(s.nextLine());
+		System.out.println("이름 : ");
+		user.setName(s.nextLine());
 	}
 
 	@Override
 	public void login() {
-		FindAcount find = new FindAcountImpl();
-		Notice notice = new NoticeImpl();
-		Userlog user = new UserLogImpl();
-		ViewMenu viewmenu = new ViewMenuImpl();
 
-		Scanner s1 = new Scanner(System.in);
+		UserData user = new UserData();
+		Notice notice = new NoticeImpl();
+		Userlog user1og = new UserLogImpl();
+		ViewMenu viewmenu = new ViewMenuImpl();
+		cartin cartin = new cartinImpl();
+		
 
 		System.out.println("[------- 로그인  -------]");
-		
-		//if()
-		
-		
-		boolean want = true;
 
-		while (want) {
+		boolean menu = true;
+
+		if (!user.setId == equals("admin")) {
+			user1og.management();
+		}
+
+		while (menu) {
 			System.out.println("1. 로그아웃");
 			System.out.println("2. 공지사항");
 			System.out.println("3. 메뉴보기");
 			System.out.println("4. 장바구니");
 			System.out.println("원하시는 메뉴 입력하세요.>");
 
-			int click = s1.nextInt();
+			int click = s.nextInt();
 
 			switch (click) {
 			case 1:
 				// 로그아웃
-				user.logOut();
+				user1og.logOut();
 				break;
 			case 2:
 				// 공지사항
@@ -56,7 +66,7 @@ public class UserLogImpl implements Userlog {
 				break;
 			case 4:
 				// 장바구니
-				user.logOut();
+				cartin.insertCart();
 				break;
 			}
 		}
@@ -66,19 +76,66 @@ public class UserLogImpl implements Userlog {
 	@Override
 	public void logOut() {
 		System.out.println("[-------로그아웃 되었습니다-------]");
+
 	}
 
 	@Override
 	public void userList() {
 		System.out.println("[-------회원목록 -------]");
-		ArrayList<UserData> userList = userCheck.selectUser();
-
-		System.out.println("====================================");
-		for (UserData user : userList) {
-			System.out.println("ID  : " + user.getId());
-			System.out.println("name  : " + user.getName());
-			System.out.println("====================================");
-		}
 
 	}
-}
+
+	@Override
+	public void management() {
+		System.out.println("[------관리자모드-------]");
+		
+
+		boolean isContinue = true;
+
+		while (isContinue) {
+
+			System.out.println("【--관리자모드-- 】");
+			System.out.println("1. 회원목록");
+			System.out.println("2. 회원삭제");
+			System.out.println("3. 메뉴추가");
+			System.out.println("4. 메뉴삭제");
+			System.out.println("메뉴에 해당하는 번호 입력 >");
+
+			int menu = s.nextInt();
+
+			Userlog userlog = new UserLogImpl();
+			ViewMenu viewmenu = new ViewMenuImpl();
+			
+				
+			switch (menu) {
+			case 1:
+				// 회원목록
+				userlog.userList();
+				break;
+			case 2:
+				// 회원삭제
+				userlog.userListRemove();
+				break;		
+			case 3:
+				//메뉴추가
+				viewmenu.addMenu();
+				break;
+			case 4:
+				//메뉴삭제
+				viewmenu.removeMenu();
+				break;
+			default:
+				System.out.println("프로그램이 종료되었습니다.");
+				isContinue = false;
+				break;
+
+		}
+	}
+	}
+
+	@Override  //회원목록 삭제
+	public void userListRemove() {
+		System.out.println("[-------회원목록 삭제-------]");
+		
+	}
+	}
