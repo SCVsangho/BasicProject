@@ -1,5 +1,7 @@
 package project.dao;
 
+import java.util.ArrayList;
+
 import project.vo.UserData;
 
 public interface UserCheck {
@@ -13,6 +15,8 @@ public interface UserCheck {
 	/*아이디 비밀번호 찾기*/
 	public void findAcount();
 	
+	public ArrayList<UserData> selectUser();
+
 	
 
 }
