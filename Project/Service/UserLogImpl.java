@@ -12,140 +12,119 @@ public class UserLogImpl implements Userlog {
 
 	@Override
 	public void newJoin() {
-		UserCheck userCheck = new UserCheckImpl();
-		Scanner s = new Scanner(System.in);
-		
-		UserData person = new UserData();
-		
-		System.out.println("[-------회원가입 -------]");
-		System.out.println("회원가입을 시작합니다.");
-		
-		// 이름 입력
-		boolean flag = false;
-		while (!flag) {
+System.out.println("[-------회원가입 -------]");
 
-			System.out.print("이름 : ");
-			String nameInput = s.nextLine();
+		joinName();
 
-			Pattern name = Pattern.compile("[\\w\\SW]{2,20}");
-			Matcher nameCheck = name.matcher(nameInput);
-			
-			if (nameCheck.matches()) {
-				System.out.println("이름이 정상적으로 입력되었습니다");
-				person.setName(s.nextLine());
-				flag = true;
-				
-			} else {
-				System.out.println("이름 형식이 올바르지 않습니다. 다시 입력해주세요.");
-//				 newJoin(); // 재귀호출  -> 사용 안함
-			}
-		}
-
-		// 아이디, 비밀번호 입력
-//		flag = false;
-//		while(!flag){
-//			
-//			System.out.print("아이디  :  ");
-//			String idInput = s.nextLine();
-////			UserData userCheck = userCheck.checkedId("ID", person.getId());
-//			
-//			Pattern id = Pattern.compile("[a-zA-Z0-9]\\w{6,20}");
-//			Matcher idcheck = id.matcher(idInput);
-//			
-//			if (idcheck.matches()) {		//중복검사
-//				UserData usercheck = userCheck.checkedId("ID", person.getId());
-//				if(userCheck == null){
-//					
-//					System.out.println("아이디가 정상적으로 입력되었습니다.");
-//					person.setId(s.nextLine());
-//					userCheck.addId(person);		// 수정필요 (오류나는 이유를 모르겠음)
-//					flag = true;
-//					
-//				} else {
-//					System.out.println("종복된 아이디입니다. 다시 입력해주세요");
-//				}
-//				
-//			}
-//		}
-				
-		flag = false;
-		while(!flag){
-					
-			if (!flag) {
-				
-				System.out.print("비밀번호  :  ");
-				String pswdInput = s.nextLine();
-				Pattern pass = Pattern.compile("(?=.*[?@!%*?&])[a-zA-Z0-9!@#$%^&*()_+|]{8,20}");
-				Matcher passCheck = pass.matcher(pswdInput);
-				if (passCheck.matches()) {
-					System.out.print("비밀번호 확인 :  ");
-					String tmp = s.nextLine();
-					if(pswdInput.equals(tmp)){
-						System.out.println("비밀번호가가 정상적으로 입력되었습니다.");
-						person.setPassWord(s.nextLine());
-						flag = true;
-					}
-					
-						
-				} else {
-					System.out.println("비밀번호 형식이 올바르지 않습니다. 다시 입력해주세요.");
-				}
-			}
-		}
+		joinId();
 		
-		
+		joinPass();
 
-		// 주소 입력
-		//(^[ㄱ-ㅎ가-힣]*$^[a-zA-Z]*$^[0-9]*$){10,50} >> 주소 정규식 원본(수정필요)
-		flag = false;
-		while(!flag){
-			
-			System.out.print("주소 : ");
-			String addInput = s.nextLine();
-			
-			Pattern add1 = Pattern.compile("(?=.*[?@!%*?&])[a-zA-Z0-9!@#$%^&*()_+|]{8,20}");
-			Matcher addCheck = add1.matcher(addInput);
-			
-			if (addCheck.matches()) {
-				System.out.println("주소가 정상적으로 입력되었습니다.");
-				person.setAddress(s.nextLine());
-				flag = true;
-				
-			} else {
-				System.out.println("주소 형식이 올바르지 않습니다. 다시 입력해주세요.");
-			}
-		}
-
-		// 전화번호 입력
-		flag = false;
-		while(!flag){
-			System.out.print("전화번호 : ");
-			String telInput = s.nextLine();
-			
-			Pattern tel = Pattern.compile("0\\d{1,2}-\\d{3,4}-\\d{3,4}");
-			Matcher telCheck = tel.matcher(telInput);
-			if (telCheck.matches()) {
-				System.out.println("전화번호 입력이 완료되었습니다.");
-				person.setTel(s.nextLine());
-				flag = true;
-				
-			} else {
-				System.out.println("전화번호가 올바르지 않습니다. 다시 입력해주세요.");
-			}
-		}
+		joindAddress();
 		
-		System.out.println("회원가입이 완료되었습니다.");
-	
-		System.out.println("[-------회원가입 -------]");
-		// 회원가입
-		UserData user = new UserData();
-		System.out.println("아이디 : ");
-		user.setId(s.nextLine());
-		System.out.println("비밀번호 : ");
-		user.setPassWord(s.nextLine());
-		System.out.println("이름 : ");
-		user.setName(s.nextLine());
+		joinTel();
+		
+		userCheck.addId(person);
+		
+		System.out.println(Database.tb_user.get(0));
 	}
+		
+		
+
+	private void joinTel() { 
+		System.out.print("전화번호 : ");
+		String telInput = s.nextLine();
+		Pattern telm = Pattern.compile("^[0-9]*$");
+		
+		Matcher telCheck = telm.matcher(telInput);
+		if (telCheck.matches()) {
+			System.out.println("전화번호 입력이 완료되었습니다.");
+			person.setTel(telInput);
+		} else {
+			System.out.println("전화번호가 올바르지 않습니다. 다시 입력해주세요.");
+			joinTel();
+		}
+	}
+
+	private void joindAddress() {
+		System.out.print("주소(도/시/구) : ");
+		String addInput = s.nextLine();
+		System.out.print("상세주소 : ");
+		String addInput2 = s.nextLine();
+
+		System.out.println("[[!![주소가 정확하지 않으면 Delivery System에 불이익을 받을 수 있습니다]!!]]");
+		System.out.println("입력하신 주소가 [" + addInput +" "+ addInput2 + "] 가 맞으십니까?");
+		System.out.println("네 맞습니다[[Y]] ||  다시 입력할게요[[N]]");
+		String sc = s.nextLine();
+		
+		if(sc.equals("Y") || sc.equals("y")) {
+		System.out.println("주소가 정상적으로 입력되었습니다.");
+		person.setAddress(addInput +" "+ addInput2);
+		} else {
+			joindAddress();
+		}
+	}
+
+	private void joinPass() {
+		/* 비밀번호 등록 */
+		System.out.print("비밀번호  :  ");
+		String pswdInput = s.nextLine();
+		Pattern pass = Pattern.compile("(?=.*[?@!%*?&])[a-zA-Z0-9!@#$%^&*()_+|]{8,20}");
+		Matcher passCheck = pass.matcher(pswdInput);
+		if (passCheck.matches()) {
+			System.out.print("비밀번호 확인 :  ");
+			String tmp = s.nextLine();
+			if (pswdInput.equals(tmp)) {
+				System.out.println("비밀번호가가 정상적으로 입력되었습니다.");
+				person.setPassWord(pswdInput);
+			} else {
+				System.out.println("비밀번호가 틀렸습니다.");
+				joinPass();
+			}
+
+		} else {
+			System.out.println("비밀번호 형식이 올바르지 않습니다. 다시 입력해주세요.");
+			joinPass();
+		}
+	}
+
+	private void joinId() {
+		System.out.print("아이디  :  ");
+		String idInput = s.nextLine();
+
+		Pattern id = Pattern.compile("^[a-zA-Z0-9]*${6,20}");
+		Matcher idcheck = id.matcher(idInput);
+
+		if (idcheck.matches()) { // 중복검사
+			UserData userCh = userCheck.checkedId("ID", person.getId());
+			if (userCh == null) {
+				person.setId(idInput);
+				System.out.println("아이디가 정상적으로 입력되었습니다.");
+			} else {
+				System.out.println("종복된 아이디입니다. 다시 입력해주세요");
+				joinId();
+			}
+
+		}
+
+	}
+
+	private void joinName() {
+		/* 이름 등록 */
+		System.out.print("이름 : ");
+		String nameInput = s.nextLine();
+
+		Pattern name = Pattern.compile("[\\w\\SW]{2,20}");
+		Matcher nameCheck = name.matcher(nameInput);
+
+		if (nameCheck.matches()) {
+			System.out.println("이름이 정상적으로 입력되었습니다");
+			person.setName(nameInput);
+		} else {
+			System.out.println("이름 형식이 올바르지 않습니다. 다시 입력해주세요.");
+			joinName();
+		}
+	
 
 	@Override
 	public void login() {
