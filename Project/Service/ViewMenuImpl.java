@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 import project.dao.MenuView;
 import project.dao.MenuViewImpl;
+import project.vo.Database;
 import project.vo.MenuData;
+import project.vo.NoticeData;
 
 public class ViewMenuImpl implements ViewMenu {
 	
@@ -45,5 +47,21 @@ public class ViewMenuImpl implements ViewMenu {
 
 		}
 
+	}
+
+	@Override
+	public void removeMenu() {
+		Scanner s = new Scanner(System.in);
+//		ArrayList<NoticeData> tb_menu = new ArrayList<NoticeData>();
+		
+		viewMenu();
+		System.out.print("삭제할 메뉴 번호를 입력>");
+
+		int delNo = s.nextInt();
+		if (delNo <= Database.tb_menu.size()) {
+			Database.tb_menu.remove(delNo - 1);
+		} else {
+			System.out.println("존재하지 않는 메뉴입니다.");
+		}
 	}
 }
