@@ -14,6 +14,9 @@ import project.service.ViewMenuImpl;
 public class Controller {
 
 	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+
 		boolean isContinue = true;
 
 		while (isContinue) {
@@ -52,7 +55,7 @@ public class Controller {
 				break;
 			case 5:
 				// 공지사항
-				notice.notice();
+				notice.viewNotice();
 				break;
 			default:
 				System.out.println("프로그램이 종료되었습니다.");
@@ -60,6 +63,8 @@ public class Controller {
 				break;
 
 			}
-		}	
+
+		}
+		
 	}
 }
