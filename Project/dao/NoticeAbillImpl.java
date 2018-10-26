@@ -1,6 +1,7 @@
 package project.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import project.vo.Database;
@@ -10,6 +11,7 @@ public class NoticeAbillImpl implements NoticeAbill {
 
 	@Override
 	public void createdNumber() {
+
 		NoticeData noti = new NoticeData();
 
 		for (int i = 0; i < Database.tb_notice.size() + 1; i++) {
@@ -18,7 +20,6 @@ public class NoticeAbillImpl implements NoticeAbill {
 				System.out.println("번호가 추가되었습니다.");
 			}
 		}
-
 	}
 
 	@Override
@@ -42,5 +43,10 @@ public class NoticeAbillImpl implements NoticeAbill {
 	@Override
 	public void insertNotice(NoticeData notice) {
 		Database.tb_notice.add(notice);
+	}
+
+	@Override
+	public ArrayList<NoticeData> noticeList() {
+		return Database.tb_notice;
 	}
 }

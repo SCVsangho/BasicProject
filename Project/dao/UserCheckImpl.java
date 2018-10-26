@@ -2,6 +2,7 @@ package project.dao;
 
 import java.util.ArrayList;
 
+
 import project.vo.Database;
 import project.vo.UserData;
 
@@ -26,8 +27,8 @@ public class UserCheckImpl implements UserCheck {
 		}
 
 	@Override
-	public void addId() {
-		// TODO Auto-generated method stub
+	public void addId(UserData person) {
+		Database.tb_user.add(person);
 
 	}
 

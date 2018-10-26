@@ -22,8 +22,9 @@ public class MenuViewImpl implements MenuView {
 	}
 
 	@Override
-	public void removeMenu(MenuData menu) {
-		Database.tb_menu.remove(menu);
+	public void removeMenu() {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

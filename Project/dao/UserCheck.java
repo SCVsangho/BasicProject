@@ -10,7 +10,7 @@ public interface UserCheck {
 	public UserData checkedId(String key, String value);
 	
 	/*회원가입 실행*/
-	public void addId();
+	public void addId(UserData person);
 	
 	/*아이디 비밀번호 찾기*/
 	public void findAcount();

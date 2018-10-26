@@ -1,5 +1,7 @@
 package project.dao;
 
+import java.util.ArrayList;
+
 import project.vo.NoticeData;
 
 public interface NoticeAbill {
@@ -12,5 +14,7 @@ public interface NoticeAbill {
 	String createdTime();
 	
 	void insertNotice(NoticeData notice);
+	
+	ArrayList<NoticeData> noticeList();
 
 }
