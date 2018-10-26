@@ -35,13 +35,34 @@ public class CartInImpl implements CartIn {
 
 	@Override
 	public void removeCart() {
-		// TODO Auto-generated method stub
+		
+		Scanner s = new Scanner(System.in);
+
+		cartPrint();
+		System.out.print("삭제할 메뉴의 번호를 입력해주세요.");
+
+		int cartDelNo = s.nextInt();
+		if (cartDelNo <= Database.tb_cart.size()) {
+			Database.tb_cart.remove(cartDelNo - 1);
+		} else {
+			System.out.println("존재하지 않는 메뉴입니다.");
+		}
 
 	}
 
 	@Override
 	public void cartPrint() {
-		// TODO Auto-generated method stub
+		
+		int sum = 0;
+		
+		for(int i = 0 ; i < Database.tb_cart.size(); i++){
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("매뉴  이름  :" + Database.tb_cart.get(i).getMenuName());
+			System.out.println("매뉴  가격  :" + Database.tb_cart.get(i).getMenuPrice());
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			sum += Database.tb_cart.get(i).getMenuPrice();
+		}
+		System.out.println("총 결제할 금액 :" + sum);
 
 	}
 
