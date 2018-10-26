@@ -1,206 +1,99 @@
-package project.controller;
+package project.service;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import project.service.CartIn;
-import project.service.CartInImpl;
-import project.service.FindAcount;
-import project.service.FindAcountImpl;
-import project.service.Notice;
-import project.service.NoticeImpl;
-import project.service.Review;
-import project.service.ReviewImpl;
-import project.service.UserLogImpl;
-import project.service.Userlog;
-import project.service.ViewMenu;
-import project.service.ViewMenuImpl;
+import project.controller.Controller;
+import project.dao.PayDao;
+import project.dao.PayDaoImpl;
 import project.vo.Database;
+import project.vo.MenuData;
 
-public class Controller {
+public class PayImpl implements Pay {
 
-	public static void main(String[] args) {
+	PayDao pp = new PayDaoImpl();
+	MenuData menu = new MenuData();
+	ArrayList<Integer> indexValue = new ArrayList<>();
 
-		staratProgram();
-	}
+	int money;
+	int[] sumPrice = new int[indexValue.size()];
+	int resultPrice = 0;
 
-	public static void staratProgram() {
-		
-		FindAcount find = new FindAcountImpl();
-		Notice notice = new NoticeImpl();
-		Userlog userlog = new UserLogImpl();
-		ViewMenu viewmenu = new ViewMenuImpl();
-		Userlog user1og = new UserLogImpl();
-		CartIn cartin = new CartInImpl();
-		Review review = new ReviewImpl();
+	Scanner s = new Scanner(System.in);
 
-		Scanner s = new Scanner(System.in);
+	@Override
+	public void pay() {
 
-		boolean isContinue = true;
+		for (int i = 0; i < Database.tb_cart.size(); i++) { // 장바구니 목록
+			// System.out.println(indexValue.get(i));
+			System.out.println(Database.tb_cart.get(indexValue.get(i)));
+		}
 
-		while (isContinue) {
-			if (UserLogImpl.adminMode) {
+		System.out.println("결제를 하시겠습니까?");
+		System.out.println("네 [y], 아니요 [n]을 누르세요 ");
+		String sc = s.nextLine();
 
-				isContinue = true;
+		for (int i = 0; i < indexValue.size(); i++) {
+			sumPrice[i] = Database.tb_menu.get(indexValue.get(i))
+					.getMenuPrice();
+			resultPrice += sumPrice[i];
+		}
 
-				while (isContinue) {
+		if (sc.equalsIgnoreCase("Y")) { // 결제 여부
+			System.out.println("결제를 진행합니다.");
 
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("【 Welcome To -JUSEYO- |Admin| 】");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("1. 회원목록");
-					System.out.println("2. 회원삭제");
-					System.out.println("3. 메뉴추가");
-					System.out.println("4. 메뉴삭제");
-					System.out.println("5. 공지사항추가");
-					System.out.println("6. 공지사항삭제");
-					System.out.println("7. 리뷰보기");
-					System.out.println("8. 리뷰삭제");
-					System.out.println("9. 관리자모드 해제");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.print("메뉴에 해당하는 번호 입력 >>>>");
+			System.out.println("돈을 지불해주세요 >> ");
+			money = s.nextInt(); // 돈 입력
 
-					int menu = s.nextInt();
+			if (money < resultPrice) { // 돈 지불
+				System.out.println("돈이 부족합니다.");
 
-					switch (menu) {
-					case 1:
-						// 회원목록
-						userlog.userList();
-						break;
-					case 2:
-						// 회원삭제
-						userlog.userListRemove();
-						break;
-					case 3:
-						// 메뉴추가
-						viewmenu.addMenu();
-						break;
-					case 4:
-						// 메뉴삭제
-						viewmenu.removeMenu();
-						break;
-					case 5:
-						// 공지사항추가
-						notice.addNotice();
-					case 6:
-						// 공지사항삭제
-						notice.removeNotice();
-						break;
-					case 7:
-						// 리뷰보기
-						review.viewReview();
-						break;
-					case 8:
-						// 리뷰삭제
-						review.removeReview();
-						break;
-					case 9:
-						// 관리자모드 해제
-						userlog.outManagement();
-						break;
-					default:
-						System.out.println("프로그램이 종료되었습니다.");
-						isContinue = false;
-						break;
-
-					}
-				}
 			} else {
 
-				if (Database.loginUser == null) { // 초기화면
+				money -= resultPrice;// 메뉴 가격을 더한 값 뺸다.
+				System.out.println("남은돈: " + money);
 
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("【 Welcome To -JUSEYO- 】");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("1. 회원가입");
-					System.out.println("2. 로그인");
-					System.out.println("3. 아이디,비밀번호 찾기");
-					System.out.println("4. 메뉴보기");
-					System.out.println("5. 공지사항");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.print("메뉴에 해당하는 번호 입력 >>>>");
+				for (int i = 0; i < indexValue.size(); i++) {
+					Database.item.add(indexValue.get(i));
+				}
+				System.out.println(indexValue + "을 주문하셨습니다.");
 
-					int menu = s.nextInt();
+				pp.receipt(); // 영수증 출력
 
-					switch (menu) {
-					case 1:
-						// 회원가입
-						userlog.newJoin();
-						break;
-					case 2:
-						// 로그인
-						userlog.login();
-						break;
-					case 3:
-						// 아이디, 비밀번호 찾기
-						find.findAcount();
-						break;
-					case 4:
-						// 메뉴보기
-						viewmenu.viewMenu();
-						break;
-					case 5:
-						// 공지사항
-						notice.viewNotice();
-					case 101100111:
-						// 관리자모드
-						UserLogImpl.adminMode = true;
-						break;
-					default:
-						System.out.println("프로그램이 종료되었습니다.");
-						isContinue = false;
-						break;
+				for (int i = 0; i < Database.tb_cart.size();) {
+					Database.tb_cart.remove(i); // 결제완료되서 장바구니 비우기
+				}
 
-					}
+			}
+		} else if (sc.equalsIgnoreCase("N")) {
+			System.out.println("결제를 취소합니다.");
 
-				} else if (Database.loginUser != null) { // 로그인 모드
+		}
+	}
 
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("【 Welcome To -JUSEYO- 】 + |Login|" + Database.loginUser.getId());
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("1. 로그아웃");
-					System.out.println("2. 공지사항");
-					System.out.println("3. 메뉴보기");
-					System.out.println("4. 장바구니 담기");
-					System.out.println("5. 장바구니 삭제");
-					System.out.println("6. 장바구니 목록 ");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.print("메뉴에 해당하는 번호 입력 >>>>");
+	@Override
+	public void returnpay() { // 환불하기
+		System.out.println("환불하시 겠습니까?");
+		System.out.println("네 [y], 아니요 [n]을 누르세요 ");
 
-					int click = s.nextInt();
+		String sc = s.nextLine();
 
-					switch (click) {
-					case 1:
-						// 로그아웃
-						user1og.logOut();
-						break;
-					case 2:
-						// 공지사항
-						notice.viewNotice();
-						break;
-					case 3:
-						// 메뉴보기
-						viewmenu.viewMenu();
-						break;
-					case 4:
-						// 장바구니 담기
-						cartin.insertCart();
-						break;
-					case 5:
-						// 장바구니 삭제
-						cartin.removeCart();
-						break;
-					case 6:
-						// 장바구니 목록
-						cartin.cartPrint();
-						break;
-					default:
-						System.out.println("프로그램이 종료되었습니다.");
-						isContinue = false;
-						break;
-					}
+		if (sc.equalsIgnoreCase("Y")) { // 결제 여부
+			System.out.println("환불해드리겠습니다.");
+
+			for (int i = 0; i < indexValue.size(); i++) {
+
+				if (Database.item.remove(indexValue)) {
+					money += resultPrice;// 메뉴 가격을 더한 값 뺸다.
+					System.out.println(indexValue + "을/를  환불하였습니다.");
+
+				} else {
+					System.out.println("주문하신 내역이 없습니다.");
 				}
 			}
-
+		} else if (sc.equalsIgnoreCase("N")) {
+			System.out.println("환불을 취소합니다.");
+			Controller.staratProgram();
 		}
 	}
 }
