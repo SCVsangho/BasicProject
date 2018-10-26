@@ -27,7 +27,7 @@ public class FindAcountImpl implements FindAcount {
 			for (int i = 0; i < Database.tb_user.size(); i++) {
 				UserData user = Database.tb_user.get(i);
 				if (user.getName().equals(name) && user.getId().equals(id) && user.getTel().equals(tel)) {
-					System.out.println("패스워드: " + user.getPassWord());
+					System.out.println("패스워드 : " + user.getPassWord());
 					flag = true;
 				} else {
 					System.out.println("등록되지 않은 정보입니다.");

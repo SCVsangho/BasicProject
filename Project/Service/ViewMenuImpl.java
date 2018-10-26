@@ -7,12 +7,11 @@ import project.dao.MenuView;
 import project.dao.MenuViewImpl;
 import project.vo.Database;
 import project.vo.MenuData;
-import project.vo.NoticeData;
 
 public class ViewMenuImpl implements ViewMenu {
-	
+
 	MenuView menuDao = new MenuViewImpl();
-	
+
 	@Override
 	public void addMenu() {
 
@@ -27,7 +26,7 @@ public class ViewMenuImpl implements ViewMenu {
 		MenuData menuCheck = menuDao.checkedMenu("name", menu.getMenuName());
 		if (menuCheck == null) {
 			/* 메뉴 삽입 */
-		
+
 			menuDao.insertMenu(menu);
 		} else {
 			/* 메뉴 중복 */
@@ -37,14 +36,17 @@ public class ViewMenuImpl implements ViewMenu {
 
 	@Override
 	public void viewMenu() {
+		System.out.println("<<MENU>>");
 		ArrayList<MenuData> menuList = menuDao.menuList();
 
-		System.out.println("===============================================");
+		int i = 0;
+
 		for (MenuData menu : menuList) {
+			System.out.println("[[" + (i + 1) + "]]" + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			System.out.println("Menu Name   : " + menu.getMenuName());
 			System.out.println("Menu Price  : " + menu.getMenuPrice());
-			System.out.println("===============================================");
-
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			i++;
 		}
 
 	}
@@ -53,7 +55,7 @@ public class ViewMenuImpl implements ViewMenu {
 	public void removeMenu() {
 		Scanner s = new Scanner(System.in);
 //		ArrayList<NoticeData> tb_menu = new ArrayList<NoticeData>();
-		
+
 		viewMenu();
 		System.out.print("삭제할 메뉴 번호를 입력>");
 
@@ -64,4 +66,5 @@ public class ViewMenuImpl implements ViewMenu {
 			System.out.println("존재하지 않는 메뉴입니다.");
 		}
 	}
+
 }
