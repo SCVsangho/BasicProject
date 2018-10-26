@@ -5,9 +5,8 @@ import java.util.Scanner;
 
 import project.dao.NoticeAbill;
 import project.dao.NoticeAbillImpl;
-import project.vo.MenuData;
+import project.vo.Database;
 import project.vo.NoticeData;
-import project.vo.UserData;
 
 public class NoticeImpl implements Notice {
 
@@ -22,6 +21,7 @@ public class NoticeImpl implements Notice {
 		/* 데이터베이스에 공지사항 정보를 등록 */
 		// 번호 등록
 
+		
 		// 제목 등록
 		System.out.print("[공지사항 제목 등록] 제목 : ");
 		String title = sc.nextLine();
@@ -63,8 +63,8 @@ public class NoticeImpl implements Notice {
 		ArrayList<NoticeData> noticeList = noticeDao.noticeList();
 
 		System.out.println("====================================");
-		for (NoticeData notice : noticeList) {
-			System.out.println("No. " + no.getNumber());
+		for (int i = 0; i < Database.tb_notice.size(); i++){
+			System.out.println("No. " + (i+1));
 			System.out.println("Title. " + no.getTitle());
 			System.out.println("Description. " + no.getDescription());
 			System.out.println("Author. " + no.getAuthor());
