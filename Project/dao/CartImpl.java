@@ -4,8 +4,7 @@ public class CartImpl implements Cart{
 
 	@Override
 	public void insertMenuToCart() {
-		// TODO Auto-generated method stub
-		
+		Database.tb_cart.add(Database.tb_menu.get(index));
 	}
 
 	@Override
