@@ -5,6 +5,8 @@ import java.util.Date;
 public class ReviewData {
 	
 	int number;
+	
+	String title;
 	String description;
 	String author;		 // 현재 로그인 된 아이디를 강제로 저장
 	String time;		// 작성 시 yyyy.MM.dd : hh.mm
@@ -13,9 +15,18 @@ public class ReviewData {
 	/*
 	 * ====================================================================================
 	 */
+	
 
 	public int getNumber() {
 		return number;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setNumber(int number) {
@@ -39,7 +50,7 @@ public class ReviewData {
 		this.author = author;
 	}
 
-	public String getTime(String time) {
+	public String getTime() {
 		return time;
 	}
 
