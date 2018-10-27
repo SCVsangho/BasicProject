@@ -23,7 +23,7 @@ public class UserLogImpl implements Userlog {
 	@Override
 	public void newJoin() {
 
-		System.out.println("[-------회원가입 -------]");
+		System.out.println("******[[ 회원가입 ]]******");
 
 		joinName();
 
@@ -37,17 +37,21 @@ public class UserLogImpl implements Userlog {
 
 		userCheck.addId(person);
 
-		System.out.println(Database.tb_user.get(0));
+		person = new UserData();
+
 	}
 
 	private void joinTel() {
-		System.out.print("전화번호 : ");
+		System.out.println(" [ - ] 을 제외한 숫자로만 입력해주세요.");
+		System.out.println();
+		System.out.print("[전화번호] : ");
 		String telInput = s.nextLine();
 		Pattern telm = Pattern.compile("^[0-9]*$");
 
 		Matcher telCheck = telm.matcher(telInput);
 		if (telCheck.matches()) {
 			System.out.println("전화번호 입력이 완료되었습니다.");
+			System.out.println();
 			person.setTel(telInput);
 		} else {
 			System.out.println("전화번호가 올바르지 않습니다. 다시 입력해주세요.");
@@ -56,19 +60,21 @@ public class UserLogImpl implements Userlog {
 	}
 
 	private void joindAddress() {
-		System.out.print("주소(도/시/구) : ");
+		System.out.print("[주소(도/시/구)] : ");
 		String addInput = s.nextLine();
-		System.out.print("상세주소 : ");
+		System.out.print("[상세주소] : ");
 		String addInput2 = s.nextLine();
 
-		System.out.println("[[!![주소가 정확하지 않으면 Delivery System에 불이익을 받을 수 있습니다]!!]]");
-		System.out.println("입력하신 주소가 [" + addInput + " " + addInput2 + "] 가 맞으십니까?");
-		System.out.println("네 맞습니다[[Y]] ||  다시 입력할게요[[N]]");
+		System.out.println("******[[ 주소가 정확하지 않으면 Delivery System에 불이익을 받을 수 있습니다 ]]******");
+		System.out.println("******[[입력하신 주소가 [" + addInput + " " + addInput2 + "] 가 맞으십니까?");
+		System.out.println("[[ Y. 입력완료  ||  N. 입력취소 ]]");
 		String sc = s.nextLine();
 
 		if (sc.equals("Y") || sc.equals("y")) {
+			System.out.println();
 			System.out.println("주소가 정상적으로 입력되었습니다.");
 			person.setAddress(addInput + " " + addInput2);
+			System.out.println();
 		} else {
 			joindAddress();
 		}
@@ -76,16 +82,19 @@ public class UserLogImpl implements Userlog {
 
 	private void joinPass() {
 		/* 비밀번호 등록 */
-		System.out.print("비밀번호  :  ");
+		System.out.println("******[[  최소 8글자 이상, 특수문자를 1개 이상 필수로 기재하세요.  ]]******");
+		System.out.print("[비밀번호]  :  ");
 		String pswdInput = s.nextLine();
-		Pattern pass = Pattern.compile("(?=.*[?@!%*?&])[a-zA-Z0-9!@#$%^&*()_+|]{8,20}");
+		Pattern pass = Pattern.compile("(?=.*[?@!%*?&])[a-zA-Z0-9!@#$%^&*()_+|.,]{8,20}");
 		Matcher passCheck = pass.matcher(pswdInput);
 		if (passCheck.matches()) {
-			System.out.print("비밀번호 확인 :  ");
+			System.out.println("******[[  동일한 비밀번호를 입력해주세요.  ]]******");
+			System.out.print("[비밀번호 확인] :  ");
 			String tmp = s.nextLine();
 			if (pswdInput.equals(tmp)) {
 				System.out.println("비밀번호가가 정상적으로 입력되었습니다.");
 				person.setPassWord(pswdInput);
+				System.out.println();
 			} else {
 				System.out.println("비밀번호가 틀렸습니다.");
 				joinPass();
@@ -98,28 +107,29 @@ public class UserLogImpl implements Userlog {
 	}
 
 	private void joinId() {
-		System.out.print("아이디  :  ");
+		System.out.println("******[[  특수문자를 제외한 영문과 숫자, 6자리 이상으로 생성해주세요.  ]]******");
+		System.out.print("[아이디]  :  ");
 		String idInput = s.nextLine();
 
 		Pattern id = Pattern.compile("^[a-zA-Z0-9]*${6,20}");
 		Matcher idcheck = id.matcher(idInput);
 
 		if (idcheck.matches()) { // 중복검사
-			UserData userCh = userCheck.checkedId("ID", person.getId());
+			UserData userCh = userCheck.checkedId("ID", idInput);
 			if (userCh == null) {
 				person.setId(idInput);
 				System.out.println("아이디가 정상적으로 입력되었습니다.");
-			} else {
-				System.out.println("종복된 아이디입니다. 다시 입력해주세요");
-				joinId();
+				System.out.println();
 			}
+		} else {
+			System.out.println("종복된 아이디입니다. 다시 입력해주세요");
+			joinId();
 		}
-
 	}
 
 	private void joinName() {
 		/* 이름 등록 */
-		System.out.print("이름 : ");
+		System.out.print("[이름] : ");
 		String nameInput = s.nextLine();
 
 		Pattern name = Pattern.compile("[\\w\\SW]{2,20}");
@@ -128,6 +138,7 @@ public class UserLogImpl implements Userlog {
 		if (nameCheck.matches()) {
 			System.out.println("이름이 정상적으로 입력되었습니다");
 			person.setName(nameInput);
+			System.out.println();
 		} else {
 			System.out.println("이름 형식이 올바르지 않습니다. 다시 입력해주세요.");
 			joinName();
@@ -137,80 +148,82 @@ public class UserLogImpl implements Userlog {
 	@Override
 	public void login() {
 
-		System.out.print("ID : ");
+		System.out.print("[   ID   ] : ");
 		String id = s.nextLine();
-		System.out.print("Password : ");
+		System.out.print("[Password] : ");
 		String password = s.nextLine();
 
-			for (int i = 0; i < Database.tb_user.size(); i++) {
-				UserData user1 = Database.tb_user.get(i);
+		for (int i = 0; i < Database.tb_user.size(); i++) {
 
-				if (user1.getId().equals(id)) {
-					if (user1.getPassWord().equals(password)) {
-						System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-						System.out.println("[System] 로그인 되었습니다.");
-						System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-						Database.loginUser = user1;
-					} else {
-						System.out.println("[Err!!]로그인 정보가 올바르지 않습니다.");
-					}
+			if (Database.tb_user.get(i).getId().equals(id)) {
+				if (Database.tb_user.get(i).getPassWord().equals(password)) {
+					Database.loginUser = Database.tb_user.get(i);
+					System.out.println("******[[ 환영합니다" + Database.loginUser.getId() + "님 ]]******");
 				}
+
 			}
+
 		}
+		System.out.println("******[[  로그인 정보가 올바르지 않습니다.  ]]******");
+	}
 
 	@Override
 	public void logOut() {
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("[System] 로그아웃 되었습니다.");
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("******[[  로그아웃 되었습니다.  ]]******");
 		Database.loginUser = null;
+		for (int i = 0; i < Database.tb_cart.size();) {
+
+			Database.tb_cart.remove(i);
+		}
 	}
 
 	@Override
 	public void userList() {
-		System.out.println("[-------회원목록 -------]");
-		ArrayList<UserData> userList = userCheck.selectUser();
+		System.out.println("******[[  회원목록  ]]******");
 
-		System.out.println("====================================");
-		for (UserData user : userList) {
-			System.out.println("ID  : " + user.getId());
-			System.out.println("name  : " + user.getName());
-			System.out.println("====================================");
+		UserData user = new UserData();
+
+		System.out.println("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-");
+		for (int i = 0; i < Database.tb_user.size(); i++) {
+			user = Database.tb_user.get(i);
+			System.out.println("[No]    : " + (i + 1));
+			System.out.println("[ID]    : " + user.getId());
+			System.out.println("[name]  : " + user.getName());
+			System.out.println("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-");
 		}
-
 	}
 
 	@Override
 	public void userListRemove() {
-		System.out.println("[-------회원목록 삭제-------]");
+		System.out.println("******[[  회원삭제/탈퇴  ]]******");
+		System.out.println();
 		Scanner s = new Scanner(System.in);
 		Userlog userlog = new UserLogImpl();
 
 		userlog.userList();
-		System.out.print("삭제할 회원 번호를 입력>");
+		System.out.print("삭제할 회원 번호를 입력>> ");
 
 		int delUser = s.nextInt();
 		if (delUser <= Database.tb_user.size()) {
 			Database.tb_user.remove(delUser - 1);
-			System.out.println(delUser + "번 회원 삭제 완료");
+			System.out.println("******[[  " + delUser + "번 회원 삭제 완료  ]]******");
 		} else {
-			System.out.println("존재하지 않는 회원입니다.");
+			System.out.println("******[[  존재하지 않는 회원입니다.  ]]******");
 		}
 	}
 
 	@Override
 	public void management() {
-		System.out.println("[------관리자모드-------]");
+		System.out.println("******[[  관리자모드  ]]******");
 
 		boolean isContinue = true;
 
 		while (isContinue) {
 
-			System.out.println("【--관리자모드-- 】");
-			System.out.println("1. 회원목록");
-			System.out.println("2. 회원삭제");
-			System.out.println("3. 메뉴추가");
-			System.out.println("4. 메뉴삭제");
+			System.out.println("1. |회원목록|");
+			System.out.println("2. |회원삭제|");
+			System.out.println("3. |메뉴추가|");
+			System.out.println("4. |메뉴삭제|");
 			System.out.println("메뉴에 해당하는 번호 입력 >");
 
 			int menu = s.nextInt();
@@ -250,5 +263,25 @@ public class UserLogImpl implements Userlog {
 		adminMode = false;
 		Controller.staratProgram();
 
+	}
+
+	@Override
+	public void persnalinpo() {
+		System.out.println("******[[  개인정보  ]]******");
+		System.out.println(" [이름]		: " + Database.loginUser.getName());
+		System.out.println(" [ID] 		: " + Database.loginUser.getId());
+		System.out.println(" [TEL]		: " + Database.loginUser.getTel());
+		System.out.println(" [ADDRESS]	: " + Database.loginUser.getAddress());
+		System.out.println("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~");
+		System.out.println("[[ 1. 개인정보 수정  ||  2.나가기 ]]");
+		System.out.print("메뉴 입력 >>");
+		int input = s.nextInt();
+		switch (input) {
+		case 1:
+			userCheck.modifiedPersnalInpo();
+			break;
+		case 2:
+			Controller.staratProgram();
+		}
 	}
 }

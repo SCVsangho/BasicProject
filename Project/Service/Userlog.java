@@ -25,6 +25,9 @@ public interface Userlog {
 	//관리자모드 해제
 	public void outManagement();
 	
+	//개인정보 보기
+	public void persnalinpo();
+	
 
 	
 }

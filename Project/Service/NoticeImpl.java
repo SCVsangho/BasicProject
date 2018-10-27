@@ -21,7 +21,6 @@ public class NoticeImpl implements Notice {
 		/* 데이터베이스에 공지사항 정보를 등록 */
 		// 번호 등록
 
-		
 		// 제목 등록
 		System.out.print("[공지사항 제목 등록] 제목 : ");
 		String title = sc.nextLine();
@@ -33,8 +32,7 @@ public class NoticeImpl implements Notice {
 		no.setDescription(description);
 
 		// 저자 등록
-		System.out.print("[공지사항 작성자 등록] : ");
-		String author = sc.nextLine();
+		String author = "[[ADMIN]]";
 		no.setAuthor(author);
 
 		// 현재 시간 등록
@@ -58,17 +56,16 @@ public class NoticeImpl implements Notice {
 
 	@Override
 	public void viewNotice() {
+		  System.out.println("<<공지사항>>");
+	      ArrayList<NoticeData> noticeList = noticeDao.noticeList();
 
-		System.out.println("<<공지사항>>");
-		ArrayList<NoticeData> noticeList = noticeDao.noticeList();
-
-		System.out.println("====================================");
-		for (int i = 0; i < Database.tb_notice.size(); i++){
-			System.out.println("No. " + (i+1));
-			System.out.println("Title. " + no.getTitle());
-			System.out.println("Description. " + no.getDescription());
-			System.out.println("Author. " + no.getAuthor());
-			System.out.println("====================================");
+	      System.out.println("====================================");
+	      for (int i = 0; i < Database.tb_notice.size(); i++){
+	         System.out.println("No. " + (i+1));
+	         System.out.println("Title. " + no.getTitle());
+	         System.out.println("Description. " + no.getDescription());
+	         System.out.println("Author. " + no.getAuthor());
+	         System.out.println("====================================");
 
 		}
 	}

@@ -10,5 +10,8 @@ public interface ViewMenu {
 
 	// 메뉴삭제
 	public void removeMenu();
+	
+	// 주문내역
+	public void viewBroughtList();
 
 }
