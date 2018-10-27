@@ -17,7 +17,7 @@ public class NoticeAbillImpl implements NoticeAbill {
 		for (int i = 0; i < Database.tb_notice.size() + 1; i++) {
 			if (i < Database.tb_notice.size()) {
 				noti.setNumber(i);
-				System.out.println("번호가 추가되었습니다.");
+				System.out.println("******[[  번호가 추가되었습니다.  ]]******");
 			}
 		}
 	}

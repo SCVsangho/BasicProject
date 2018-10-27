@@ -16,6 +16,10 @@ public interface UserCheck {
 	public void findAcount();
 	
 	public ArrayList<UserData> selectUser();
+	
+	
+	/*개인정보 수정*/
+	public void modifiedPersnalInpo();
 
 	
 
