@@ -7,14 +7,13 @@ import project.controller.Controller;
 import project.dao.PayDao;
 import project.dao.PayDaoImpl;
 import project.vo.Database;
+import project.vo.Item;
 import project.vo.MenuData;
 
 public class PayImpl implements Pay {
 
-	PayDao pp = new PayDaoImpl();
-	MenuData menu = new MenuData();
 	public static ArrayList<Integer> indexValue = new ArrayList<>();
-
+	
 	int money;
 	public int resultPrice = 0;
 	boolean checkMoney = false;
@@ -23,6 +22,11 @@ public class PayImpl implements Pay {
 	@Override
 	public void pay() {
 
+		PayDao pp = new PayDaoImpl();
+		MenuData menu = new MenuData();
+		resultPrice = 0;
+		checkMoney = false;
+	
 		for (int i = 0; i < Database.tb_cart.size(); i++) { // 장바구니 목록
 			int index = indexValue.get(i);
 			System.out.println(Database.tb_cart.get(indexValue.get(index)).getMenuName());
@@ -66,7 +70,6 @@ public class PayImpl implements Pay {
 			for (int i = 0; i < indexValue.size(); i++) { // 주문내역에 결제한 내용을 추가
 				int indexint = indexValue.get(i);
 				
-				System.out.println(Database.tb_cart.get(indexint).getMenuName() + "을 주문하셨습니다.");
 				Database.item.add(Database.tb_cart.get(indexint).getMenuName());
 				
 			}
@@ -74,15 +77,16 @@ public class PayImpl implements Pay {
 			pp.receipt();
 
 			for (int i = 0; i < Database.tb_cart.size();) {
-				Database.tb_cart.remove(i); // 결제완료되서 장바구니 비우기
+				Database.tb_cart.remove(i); //
 			}
 
 		}
 
 	}
-
 	@Override
 	public void returnpay() { // 환불하기
+		
+		Database dd = new Database();
 		System.out.println("환불하시 겠습니까?");
 		System.out.println("[[ Y. 결제  ||  N.취소 ]]");
 
@@ -93,20 +97,21 @@ public class PayImpl implements Pay {
 
 			for (int i = 0; i < indexValue.size(); i++) {
 
-				if (!Database.item.get(i).equals(null)) {
+				if (! Database.item.get(i).equals(null)) {
 					money += resultPrice;// 메뉴 가격을 더한 값 뺸다.
 					System.out.println(Database.item.get(i) + "을/를  환불하였습니다.");
-					
-					for(int j = 0; j < indexValue.size();) {
-						Database.item.remove(i);
-					}
+						Database.tb_cart = new ArrayList<>();
+
 				} else {
 					System.out.println("주문하신 내역이 없습니다.");
+					break;
 				}
 			}
+
 		} else if (sc.equalsIgnoreCase("N")) {
 			System.out.println("환불을 취소합니다.");
 			Controller.staratProgram();
 		}
+		Controller.staratProgram();
 	}
 }

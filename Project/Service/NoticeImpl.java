@@ -11,12 +11,13 @@ import project.vo.NoticeData;
 public class NoticeImpl implements Notice {
 
 	NoticeAbill noticeDao = new NoticeAbillImpl();
-	NoticeData no = new NoticeData();
+	
 
 	@Override
 	public void addNotice() {
 		NoticeAbill na = new NoticeAbillImpl();
 		Scanner sc = new Scanner(System.in);
+		NoticeData no = new NoticeData();
 
 		/* 데이터베이스에 공지사항 정보를 등록 */
 		// 번호 등록
@@ -62,9 +63,9 @@ public class NoticeImpl implements Notice {
 	      System.out.println("====================================");
 	      for (int i = 0; i < Database.tb_notice.size(); i++){
 	         System.out.println("No. " + (i+1));
-	         System.out.println("Title. " + no.getTitle());
-	         System.out.println("Description. " + no.getDescription());
-	         System.out.println("Author. " + no.getAuthor());
+	         System.out.println("Title. " + Database.tb_notice.get(i).getTitle());
+	         System.out.println("Description. " + Database.tb_notice.get(i).getDescription());
+	         System.out.println("Author. " + Database.tb_notice.get(i).getAuthor());
 	         System.out.println("====================================");
 
 		}

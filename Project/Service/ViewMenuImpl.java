@@ -1,13 +1,15 @@
 package project.service;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import project.dao.MenuView;
 import project.dao.MenuViewImpl;
+import project.dao.PayDaoImpl;
 import project.vo.Database;
 import project.vo.MenuData;
-import project.vo.ReviewData;
 
 public class ViewMenuImpl implements ViewMenu {
 
@@ -76,12 +78,32 @@ public class ViewMenuImpl implements ViewMenu {
 
 	@Override
 	public void viewBroughtList() {
-		for (int i = 0; i < Database.item.size(); i++) {
-			System.out.println("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-");
-			System.out.println("[번호]   : " + (i + 1));
-			System.out.println("[제목]   : " + Database.item.get(i));
-			System.out.println("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-");
-		}
-	}
 
+		int receiptSize = Database.tb_cart.size();
+
+		String[] txtMenu = new String[receiptSize];
+		int[] txtPrice = new int[receiptSize];
+
+		for (int i = 0; i < receiptSize; i++) {
+			txtMenu[i] = Database.tb_cart.get(i).getMenuName();
+			txtPrice[i] = Database.tb_cart.get(i).getMenuPrice();
+		}
+
+		System.out.println("******[[ 주 문 내 역  ]]******\n\n\n\n");
+		System.out.println(" ***" + Database.loginUser.getName() + " 님이 결제하신 내역 입니다. ***\n\n\n");
+		System.out.println("====================================\n\n");
+
+		for (int i = 0; i < receiptSize; i++) {
+			System.out.println("결제품목  : " + txtMenu[i] + "         " + txtPrice[i] + "\n");
+
+		}
+		System.out.println("====================================\n");
+		System.out.println("------------결제금액  : " + PayDaoImpl.receiptPrice + "\n");
+		System.out.println("====================================\n");
+		;
+		System.out.println("이름 : " + Database.loginUser.getName() + "\t");
+		System.out.println("계정 : " + Database.loginUser.getId() + "\n");
+		System.out.println("번호 : " + Database.loginUser.getTel() + "\n");
+
+	}
 }

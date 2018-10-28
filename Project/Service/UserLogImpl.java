@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.crypto.Data;
+
 import project.controller.Controller;
 import project.dao.UserCheck;
 import project.dao.UserCheckImpl;
@@ -160,25 +162,30 @@ public class UserLogImpl implements Userlog {
 					Database.loginUser = Database.tb_user.get(i);
 					System.out.println("******[[ 환영합니다" + Database.loginUser.getId() + "님 ]]******");
 					break;
-					
+
 				}
 
-			}else {
+			} else {
 				System.out.println("******[[  로그인 정보가 올바르지 않습니다.  ]]******");
 			}
 
 		}
-		
+
 	}
 
 	@Override
 	public void logOut() {
+		Database dd = new Database();
 		System.out.println("******[[  로그아웃 되었습니다.  ]]******");
 		Database.loginUser = null;
-		for (int i = 0; i < Database.tb_cart.size();) {
-
-			Database.tb_cart.remove(i);
+		
+		for(int i = 0; i < Database.item.size();) {
+			Database.item.remove(i);
 		}
+
+		
+		
+
 	}
 
 	@Override
