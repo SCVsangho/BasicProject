@@ -124,7 +124,7 @@ public class UserLogImpl implements Userlog {
 				System.out.println();
 			}
 		} else {
-			System.out.println("종복된 아이디입니다. 다시 입력해주세요");
+			System.out.println("올바르지 않거나 , 종복된 아이디입니다. 다시 입력해주세요");
 			joinId();
 		}
 	}
