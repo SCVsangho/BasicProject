@@ -178,7 +178,6 @@ public class Controller {
 					System.out.println("9. |개인정보| ");
 					System.out.println("10.|결제하기| ");
 					System.out.println("11.|환불신청| ");
-					System.out.println("12.|주문내역| ");
 					System.out.println("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-");
 					System.out.print(" [[ANSWER]]>>");
 
@@ -228,10 +227,6 @@ public class Controller {
 					case 11:
 						// 환볼요청
 						pay.returnpay();
-						break;
-					case 12:
-						// 주문내역
-						viewmenu.viewBroughtList();
 						break;
 					default:
 						System.out.println("프로그램이 종료되었습니다.");
