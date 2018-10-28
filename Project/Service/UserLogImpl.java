@@ -159,12 +159,16 @@ public class UserLogImpl implements Userlog {
 				if (Database.tb_user.get(i).getPassWord().equals(password)) {
 					Database.loginUser = Database.tb_user.get(i);
 					System.out.println("******[[ 환영합니다" + Database.loginUser.getId() + "님 ]]******");
+					break;
+					
 				}
 
+			}else {
+				System.out.println("******[[  로그인 정보가 올바르지 않습니다.  ]]******");
 			}
 
 		}
-		System.out.println("******[[  로그인 정보가 올바르지 않습니다.  ]]******");
+		
 	}
 
 	@Override
