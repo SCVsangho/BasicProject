@@ -17,6 +17,8 @@ public class Database {
 	/* 장바구니 */
 	public static ArrayList<MenuData> tb_cart = new ArrayList<MenuData>();
 
+	public static ArrayList<MenuData> tb_order = new ArrayList<MenuData>();
+	
 	/* 리뷰 데이터 */
 	public static ArrayList<ReviewData> tb_review = new ArrayList<ReviewData>();
 
