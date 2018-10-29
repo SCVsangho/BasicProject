@@ -21,7 +21,7 @@ public class PayImpl implements Pay {
 
 	@Override
 	public void pay() {
-		
+
 		Scanner s2 = new Scanner(System.in);
 		resultPrice = 0;
 		checkMoney = false;
@@ -64,16 +64,21 @@ public class PayImpl implements Pay {
 			System.out.println("돈이 부족합니다.");
 
 		} else if (!checkMoney) { // 돈이 많으면 false
-			
+
 			this.money -= this.resultPrice;// 메뉴 가격을 더한 값 뺸다.
 			System.out.println("거스름 돈 : " + money);
 
 			for (int i = 0; i < indexValue.size(); i++) { // 주문내역에 결제한 내용을 추가
-				int indexint = (int)indexValue.get(i);
-
+				int indexint = (int) indexValue.get(i);
 			}
+
+			for (int i = 0; i < Database.tb_cart.size(); i++) {
+				Database.tb_order.add(Database.tb_cart.get(i));
+			}
+
 			PayDaoImpl.receiptPrice = this.resultPrice;
 			pp.receipt();
+
 			for (int k = 0; k < Database.tb_cart.size();) {
 				Database.tb_cart.remove(k); //
 
@@ -85,33 +90,37 @@ public class PayImpl implements Pay {
 
 	@Override
 	public void returnpay() { // 환불하기
-		Scanner s = new Scanner(System.in);
-		Database dd = new Database();
+		Scanner s10 = new Scanner(System.in);
 		System.out.println("환불하시 겠습니까?");
 		System.out.println("[[ Y. 결제  ||  N.취소 ]]");
 
-		String sc = s.nextLine();
+		String sc = s10.nextLine();
 
 		if (sc.equalsIgnoreCase("Y")) { // 결제 여부
+		
 			System.out.println("******[[ 결제취소 ]]******");
+			
+			pp.unReceipt();
 
-			for (int i = 0; i < indexValue.size(); i++) {
+			if (!Database.tb_order.get(0).getMenuName().equals(null)) {
+				for (int i = 0; i < Database.tb_order.size(); i++) {
 
-				if (!Database.item.get(i).equals(null)) {
 					money += resultPrice;// 메뉴 가격을 더한 값 뺸다.
-					System.out.println(Database.item.get(i) + "을/를  환불하였습니다.");
-					Database.tb_cart = new ArrayList<>();
+					System.out.println(Database.tb_order.get(i) + "을/를  환불하였습니다.");
 
-				} else {
-					System.out.println("주문하신 내역이 없습니다.");
-					break;
+					Database.tb_order.remove(i);
 				}
+
+			} else {
+				System.out.println("주문하신 내역이 없습니다.");
+
 			}
 
 		} else if (sc.equalsIgnoreCase("N")) {
 			System.out.println("환불을 취소합니다.");
-			Controller.staratProgram();
+			
 		}
+		Database.tb_order = new ArrayList();
 		Controller.staratProgram();
 	}
 }

@@ -3,6 +3,7 @@ package project.service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import project.controller.Controller;
 import project.dao.ReviewDao;
 import project.dao.ReviewDaoImpl;
 import project.vo.Database;
@@ -15,6 +16,9 @@ public class ReviewImpl implements Review {
 	public void writeReview() {
 		System.out.println("******[[ 리뷰 등록 ]]******");
 		Scanner s = new Scanner(System.in);
+		System.out.println("[[ 1.등록  ||  2.취소  ]]");
+		String answer = s.nextLine();
+		if (answer.equals("1")) {
 		ReviewData review = new ReviewData();
 
 		// 리뷰번호 저장
@@ -38,20 +42,23 @@ public class ReviewImpl implements Review {
 
 		// 저장한 데이터베이스(review)를 tb_review테이블에 저장
 		reviewDao.insertReview(review);
+		} else {
+			Controller.staratProgram();
+		}
 	}
 
 	@Override
 	public void removeReview() {
 
-		System.out.println("******[[ 리뷰 등록 ]]******");
+		System.out.println("******[[ 리뷰 삭제 ]]******");
 		Scanner s = new Scanner(System.in);
 
 		viewReview();
 		System.out.println("삭제할 번호 입력>> ");
 
 		int delReview = s.nextInt();
-		if (delReview <= Database.tb_review.size()) {
-			Database.tb_review.remove(delReview);
+		if (delReview < Database.tb_review.size()) {
+			Database.tb_review.remove(delReview+1);
 		} else {
 			System.out.println("존재하지 않는 리뷰입니다.");
 		}

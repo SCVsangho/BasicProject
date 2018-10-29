@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import project.controller.Controller;
 import project.dao.MenuView;
 import project.dao.MenuViewImpl;
 import project.dao.PayDaoImpl;
@@ -21,24 +22,32 @@ public class ViewMenuImpl implements ViewMenu {
 		Scanner s = new Scanner(System.in);
 		MenuData menu = new MenuData();
 
-		System.out.println("******[[ 추가 할 메뉴를 입력해주세요 ]]******");
-		System.out.print(" [[ 메뉴 이름 ]] : ");
-		menu.setMenuName(s.nextLine());
-		System.out.print(" [[ 메뉴 가격 ]] : ");
-		menu.setMenuPrice(s.nextInt());
-		System.out.print(" [[ 메뉴 설명 ]] : ");
-		menu.setContents(s.next());
+		System.out.println("[[ 1.추가  || 2.취소  ]]");
+		String answer = s.nextLine();
 
-		System.out.println();
+		if (answer.equals("1")) {
 
-		MenuData menuCheck = menuDao.checkedMenu("name", menu.getMenuName());
-		if (menuCheck == null) {
-			/* 메뉴 삽입 */
+			System.out.println("******[[ 추가 할 메뉴를 입력해주세요 ]]******");
+			System.out.print(" [[ 메뉴 이름 ]] : ");
+			menu.setMenuName(s.nextLine());
+			System.out.print(" [[ 메뉴 가격 ]] : ");
+			menu.setMenuPrice(s.nextInt());
+			System.out.print(" [[ 메뉴 설명 ]] : ");
+			menu.setContents(s.next());
 
-			menuDao.insertMenu(menu);
+			System.out.println();
+
+			MenuData menuCheck = menuDao.checkedMenu("name", menu.getMenuName());
+			if (menuCheck == null) {
+				/* 메뉴 삽입 */
+
+				menuDao.insertMenu(menu);
+			} else {
+				/* 메뉴 중복 */
+				System.out.println("******[[ 이미 존재하는 메뉴 입니다.  ]]******");
+			}
 		} else {
-			/* 메뉴 중복 */
-			System.out.println("******[[ 이미 존재하는 메뉴 입니다.  ]]******");
+			Controller.staratProgram();
 		}
 	}
 
@@ -64,15 +73,20 @@ public class ViewMenuImpl implements ViewMenu {
 	public void removeMenu() {
 		Scanner s = new Scanner(System.in);
 //		ArrayList<NoticeData> tb_menu = new ArrayList<NoticeData>();
+		System.out.println("[[ 1.삭제  ||  2.취소  ]]");
+		String answer = s.nextLine();
+		if (answer.equals("1")) {
+			viewMenu();
+			System.out.print("삭제할 메뉴 번호를 입력>> ");
 
-		viewMenu();
-		System.out.print("삭제할 메뉴 번호를 입력>> ");
-
-		int delNo = s.nextInt();
-		if (delNo <= Database.tb_menu.size()) {
-			Database.tb_menu.remove(delNo - 1);
+			int delNo = s.nextInt();
+			if (delNo <= Database.tb_menu.size()) {
+				Database.tb_menu.remove(delNo - 1);
+			} else {
+				System.out.println("******[[  존재하지 않는 메뉴입니다.  ]]******");
+			}
 		} else {
-			System.out.println("******[[  존재하지 않는 메뉴입니다.  ]]******");
+			Controller.staratProgram();
 		}
 	}
 
